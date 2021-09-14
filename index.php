@@ -266,7 +266,7 @@ while($SR=mysqli_fetch_array($first_query)){
 
     <!-- Warp Zones -->
     <div class="w3-container" id="warpzones" style="margin-top:75px">
-        <h1 class="w3-xxxlarge w3-text-green"><b>Warp Zones and Gates.</b></h1>
+        <h1 class="w3-xxxlarge w3-text-green"><b>Warp Zones and Gates</b></h1>
         <hr style="width:50px;border:5px solid green" class="w3-round">
         <p>In La Salle, there are a lot of shortcuts between two buildings! LaSallians call these shortcuts "Warp Zones". </p>
         <p>So what's the significance of these warp zones? These warp zones help you arrive to your class faster so you won't be marked absent or late by our professor.
@@ -685,7 +685,7 @@ while($SR=mysqli_fetch_array($first_query)){
         $username= test_input($_SESSION['currentUser']);
         $checkIfUserExists = "SELECT * FROM Conference WHERE username='$username'";
 
-        $count = '';
+        $count = $currentRoom = '';
         $query = mysqli_query($sqlConnect, $checkIfUserExists);
         if (!$query) {
             die("Failed to connect: " . mysqli_error());
@@ -693,6 +693,7 @@ while($SR=mysqli_fetch_array($first_query)){
 
         while ($SR = mysqli_fetch_array($query)){
             $count =  $SR['username'];
+            $currentRoom = $SR['room_id'];
         }
 
 
@@ -709,11 +710,11 @@ while($SR=mysqli_fetch_array($first_query)){
         }
 
         else if($count != '') {
-
             echo '<form action="index.php#study" method="post">
-                <label>You are currently reserved to a room. Please click "Done" if you are finished with the room.   </label>
-                <span>     <button type="submit" class="custom-locate-button" name="done">Done</button></span>
-                </form>';
+                 <label>You are reserved to Conference Room '.$currentRoom.' Pressing "Done" will cancel 
+                  your reservation to the current room you reserved.</label>
+                  <span>     <button type="submit" class="custom-locate-button" name="done">Done</button></span>      
+                  </form>';
 
         }
 

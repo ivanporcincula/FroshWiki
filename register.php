@@ -171,7 +171,7 @@ if(isset($_POST["register"])) {
 
 
     $username = test_input($_POST["userRegister"]);
-    $email = test_input($_POST["emailRegister"]);
+    $email =$_POST["emailRegister"];
     $firstName = test_input($_POST["firstNameRegister"]);
     $lastName = test_input($_POST["lastNameRegister"]);
     $idNumber = test_input($_POST["idNumberRegister"]);
@@ -199,23 +199,23 @@ if(isset($_POST["register"])) {
     if ($databaseUsername == "") {
         if ($databaseEmail == ""){
             if ($password == $confPassword ) {
-                if(filter_var($email, FILTER_SANITIZE_EMAIL)){
-                    if(strlen($idNumber) == 8){
-                        if(filter_var($idNumber, FILTER_VALIDATE_INT)){
+                if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    if(filter_var($idNumber, FILTER_VALIDATE_INT)){
+                        if(strlen($idNumber) == 8){
                             $idArray = str_split($idNumber);
                             $checkId = (int) ($idArray[0])*8 +  (int) ($idArray[1])*7 + (int) ($idArray[2])*6
                                 + (int) ($idArray[3])*5 +  (int) ($idArray[4])*4 + (int) ($idArray[5])*3
                                 + (int) ($idArray[6])*2 +  (int) ($idArray[7])*1;
-                            if($checkId % 11 == 0 and strlen($idNumber) == 8 ){
+                            if($checkId % 11 == 0){
                                 $query2 = mysqli_query($sqlConnect, $addUser);
                                 $query3 = mysqli_query($sqlConnect2, $addProfile);
                                 if (!$query2) die("Failed to connect: " . mysqli_error());
                                 $message = "Registered Successfully!";
                             } else $message="Invalid ID Number. You are not a student of this university.";
-                        } else $message="Invalid ID Number. Please enter integers only.";
-                    }else $message = "Invalid number of characters of ID Number. It should be exactly 8.";
+                        }else $message = "Invalid number of characters of ID Number. It should be exactly 8.";
+                    } else $message="Invalid ID Number. Please enter integers only.";
                 } else $message = "This is not a valid email address. Please try again.";
-            } else $message= "Password and confirm password did not match. Please try again.";
+            } else $message= "Password and confirmation password did not match. Please try again.";
         }  else $message = "Failed to Register. E-mail has been taken by another user.";
     } else $message = "Failed to Register. Username has been taken by another user.";
 
