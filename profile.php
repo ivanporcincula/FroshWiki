@@ -548,7 +548,7 @@ while($SR=mysqli_fetch_array($first_query)){
                                             </form>';
 
                                         }
-                                        
+
                                         if(isset($_POST["savePP"])){
 
                                             $target_dir = "profile-pictures/";
@@ -588,8 +588,6 @@ while($SR=mysqli_fetch_array($first_query)){
                                                     echo "<label>Sorry, there was an error uploading your file.</label>";
                                                 }
                                             }
-
-
 
                                         }
 
