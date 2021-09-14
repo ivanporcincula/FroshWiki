@@ -144,13 +144,14 @@ if (@$_SESSION['postdata']){
         }
 
 
-        .hr{
-            height:2px;
-            margin:60px 0 50px 0;
-            background:rgba(255,255,255,.2);
-        }
+
         .foot-lnk{
             text-align:center;
+        }
+        .hr{
+            height:2px;
+            margin:10px 0 20px 0;
+            background:rgba(255,255,255,.2);
         }
 
     </style>
@@ -163,8 +164,6 @@ if(!empty($_POST["userLogin"]) && !empty($_POST["passwordLogin"])) {
     $username = test_input($_POST["userLogin"]);
     $password = test_input($_POST["passwordLogin"]);
     $getCredentials = "SELECT * FROM userInfo where username=" . "'$username'";
-
-    echo $username;
     $query = mysqli_query($sqlConnect, $getCredentials);
     if (!$query) {
         die("Failed to connect: " . mysqli_error());
@@ -219,7 +218,7 @@ function test_input($data){
                     </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        <label><?php echo $message;?></label>
+                        <?php echo $message;?></label>
                     </div>
 
                 </div>

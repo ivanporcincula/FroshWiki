@@ -1,5 +1,3 @@
-
-
 <?php
 
 $sqlConnect = mysqli_connect('localhost','root','');
@@ -54,7 +52,7 @@ if (@$_SESSION['postdata']){
         body{
             margin:0;
             background:url(backgrounds/loginbackground.jpg);
-
+            color:white;
             position: center;
             top: 50%;
             left: 0;
@@ -154,7 +152,7 @@ if (@$_SESSION['postdata']){
 
         .hr{
             height:2px;
-            margin:60px 0 50px 0;
+            margin:10px 0 20px 0;
             background:rgba(255,255,255,.2);
         }
         .foot-lnk{
@@ -202,18 +200,20 @@ if(isset($_POST["register"])) {
         if ($databaseEmail == ""){
             if ($password == $confPassword ) {
                 if(filter_var($email, FILTER_SANITIZE_EMAIL)){
-                    if(filter_var($idNumber, FILTER_VALIDATE_INT)){
-                        $idArray = str_split($idNumber);
-                        $checkId = (int) ($idArray[0])*8 +  (int) ($idArray[1])*7 + (int) ($idArray[2])*6
-                            + (int) ($idArray[3])*5 +  (int) ($idArray[4])*4 + (int) ($idArray[5])*3
-                            + (int) ($idArray[6])*2 +  (int) ($idArray[7])*1;
-                        if($checkId % 11 == 0 and strlen($idNumber) == 8 ){
-                            $query2 = mysqli_query($sqlConnect, $addUser);
-                            $query3 = mysqli_query($sqlConnect2, $addProfile);
-                            if (!$query2) die("Failed to connect: " . mysqli_error());
-                            $message = "Registered Successfully!";
-                        } else $message="Invalid ID Number. You are not a student of this university.";
-                    } else $message="Invalid ID Number. Please enter integers only.";
+                    if(strlen($idNumber) == 8){
+                        if(filter_var($idNumber, FILTER_VALIDATE_INT)){
+                            $idArray = str_split($idNumber);
+                            $checkId = (int) ($idArray[0])*8 +  (int) ($idArray[1])*7 + (int) ($idArray[2])*6
+                                + (int) ($idArray[3])*5 +  (int) ($idArray[4])*4 + (int) ($idArray[5])*3
+                                + (int) ($idArray[6])*2 +  (int) ($idArray[7])*1;
+                            if($checkId % 11 == 0 and strlen($idNumber) == 8 ){
+                                $query2 = mysqli_query($sqlConnect, $addUser);
+                                $query3 = mysqli_query($sqlConnect2, $addProfile);
+                                if (!$query2) die("Failed to connect: " . mysqli_error());
+                                $message = "Registered Successfully!";
+                            } else $message="Invalid ID Number. You are not a student of this university.";
+                        } else $message="Invalid ID Number. Please enter integers only.";
+                    }else $message = "Invalid number of characters of ID Number. It should be exactly 8.";
                 } else $message = "This is not a valid email address. Please try again.";
             } else $message= "Password and confirm password did not match. Please try again.";
         }  else $message = "Failed to Register. E-mail has been taken by another user.";
